@@ -34,11 +34,11 @@ void convertIntToChar(char ConvertedInt[], int indexTable, uint32_t numberToConv
 	do {
 		modulo = numberToConvert % 10;
 		tempChar[newIndex] = modulo;
-		newIndex++; 
+		newIndex++;
 		numberToConvert /= 10;
 	} while (numberToConvert);
 	for (int i = 0; i < newIndex; i++) {
-			printf("%d ", tempChar[i]);
+		printf("%d ", tempChar[i]);
 	}
 	printf("\n");
 	for (int i = 0; i<newIndex / 2; i++)
@@ -53,15 +53,16 @@ void convertIntToChar(char ConvertedInt[], int indexTable, uint32_t numberToConv
 	printf("\n");
 
 	for (int i = 0; i < newIndex; i++) {
-		ConvertedInt[i + indexTable] = tempChar[i];
+		ConvertedInt[i + indexTable + 1] = tempChar[i];
 	}
-	for (int i = 0; i < newIndex+indexTable; i++) {
+	ConvertedInt[indexTable] = newIndex;
+	for (int i = 0; i < newIndex + indexTable; i++) {
 		printf("%c ", ConvertedInt[i]);
 	}
 	printf("\n");
-	
-	
-	
+
+
+
 	/*int modulo;
 	uint32_t multiple;
 	uint32_t multiple2;
@@ -71,23 +72,23 @@ void convertIntToChar(char ConvertedInt[], int indexTable, uint32_t numberToConv
 	int numberOfMultiple = 0;
 	multiple = numberToConvert;
 	do {
-		multiple = multiple / 127;
-		numberOfMultiple++;
+	multiple = multiple / 127;
+	numberOfMultiple++;
 	} while (multiple/127>127);
 
 	ConvertedInt[indexTable] = numberOfMultiple;
 	ConvertedInt[indexTable + 1] = multiple;
 
 	/*for (int i = 2; i < 7; i++) {
-		if (multiple / 127 > 127) {
-			ConvertedInt[indexTable + i] = multiple / 127;
-			multiple = multiple / 127;
-		}
-		else {
-			ConvertedInt[indexTable + i] = multiple % 127;
-			multiple = 0;
-		}
-		numberOfMultiple++;
+	if (multiple / 127 > 127) {
+	ConvertedInt[indexTable + i] = multiple / 127;
+	multiple = multiple / 127;
+	}
+	else {
+	ConvertedInt[indexTable + i] = multiple % 127;
+	multiple = 0;
+	}
+	numberOfMultiple++;
 	}
 	ConvertedInt[indexTable + 1] = numberOfMultiple;*/
 
@@ -130,33 +131,54 @@ void convertIntToChar(char ConvertedInt[], int indexTable, uint32_t numberToConv
 }
 
 uint32_t convertCharToInt(char charToConvert[], int index) {
-	uint32_t result=127;
+	printf("\n\n");
+	for (int i = 0; i < charToConvert[index] + index + 1; i++) {
+		printf("%d ", charToConvert[i]);
+	}
+	printf("\n");
+	printf("\n\n");
+	uint32_t result = 0;
+	uint32_t temp=0;
+	int newIndex = charToConvert[index];
+
+	for (int i = index + 1; i < index + 1 + charToConvert[index]; i++) {
+		temp = charToConvert[i];
+		for (int j = 0; j < newIndex-1; j++) {
+			temp = temp * 10;
+		}
+		newIndex--;
+		result += temp;
+	}
+
+	return result;
+
+	/*uint32_t result=127;
 
 	for (int i = 0; i <= charToConvert[index]; i++) {
-		result = result * 127;
+	result = result * 127;
 	}
 	result = result + charToConvert[index + 1];
 
 	/*switch (index)
 	{
 	case 1:
-		result = charToConvert[index + 1];
-		break;
+	result = charToConvert[index + 1];
+	break;
 	case 2:
-		result = charToConvert[index + 1] * 127 + charToConvert[index + 2];
-		break;
+	result = charToConvert[index + 1] * 127 + charToConvert[index + 2];
+	break;
 	case 3:
-		result = charToConvert[index + 1] * 127 * 127 + charToConvert[index + 2] * 127 + charToConvert[index + 3];
-		break;
+	result = charToConvert[index + 1] * 127 * 127 + charToConvert[index + 2] * 127 + charToConvert[index + 3];
+	break;
 	case 4:
-		result = charToConvert[index + 1] * 127 * 127 * 127 + charToConvert[index + 2] * 127 * 127 + charToConvert[index + 3] * 127 + charToConvert[index + 4];
-		break;
+	result = charToConvert[index + 1] * 127 * 127 * 127 + charToConvert[index + 2] * 127 * 127 + charToConvert[index + 3] * 127 + charToConvert[index + 4];
+	break;
 	case 5:
-		result = charToConvert[index + 1] * 127 * 127 * 127 * 127 + charToConvert[index + 2] * 127 * 127 * 127 + charToConvert[index + 3] * 127 * 127 + charToConvert[index + 4] * 127 + charToConvert[index + 5];
-		break;
+	result = charToConvert[index + 1] * 127 * 127 * 127 * 127 + charToConvert[index + 2] * 127 * 127 * 127 + charToConvert[index + 3] * 127 * 127 + charToConvert[index + 4] * 127 + charToConvert[index + 5];
+	break;
 	default:
-		printf("error");
-		break;
+	printf("error");
+	break;
 	}*/
 
 	return result;
